@@ -11,13 +11,9 @@ Thumbs.db
 Homestead.json
 Homestead.yaml
 auth.json
-# *.sqlite
-*.sqlite-journal
 /.phpunit.cache
 /.idea
-/.vscode
-/phpunit.xml
-/.phpactor.json
-/.env
-/.env.*
-!.env.example
+/.vscodedatabase/database.sqlite
+
+# Database
+database/database.sqlite

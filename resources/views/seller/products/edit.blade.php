@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier le produit - Vendeur</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="#">Marketplace Sénégal - Vendeur</a>
             <div class="navbar-nav ms-auto">
+                <a href="{{ route('seller.products.index') }}" class="btn btn-outline-light btn-sm me-2">Mes produits</a>
+                <a href="{{ route('seller.subscriptions.index') }}" class="btn btn-outline-light btn-sm me-2">Abonnement</a>
                 <span class="navbar-text text-white me-3">{{ Auth::user()->name }}</span>
                 <form method="POST" action="{{ route('logout') }}" style="display:inline">
                     @csrf
@@ -26,13 +29,15 @@
                 <h3>Modifier le produit</h3>
             </div>
             <div class="card-body">
-                <form action="{{ route('seller.products.update', $product) }}" method="POST">
+                <form action="{{ route('seller.products.update', $product) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+                    
                     <div class="mb-3">
                         <label>Nom du produit *</label>
                         <input type="text" name="name" class="form-control" value="{{ $product->name }}" required>
                     </div>
+                    
                     <div class="mb-3">
                         <label>Catégorie *</label>
                         <select name="category_id" class="form-control" required>
@@ -41,10 +46,12 @@
                             @endforeach
                         </select>
                     </div>
+                    
                     <div class="mb-3">
                         <label>Description *</label>
                         <textarea name="description" class="form-control" rows="5" required>{{ $product->description }}</textarea>
                     </div>
+                    
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -59,6 +66,25 @@
                             </div>
                         </div>
                     </div>
+
+                    @if($product->main_photo)
+                    <div class="mb-3">
+                        <label>Photo actuelle</label>
+                        <div>
+                            <img src="{{ asset('storage/' . $product->main_photo) }}" alt="Photo" style="max-width: 200px;" class="img-thumbnail">
+                            <a href="{{ route('seller.products.delete-photo', $product) }}" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer cette photo ?')">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </a>
+                        </div>
+                    </div>
+                    @endif
+
+                    <div class="mb-3">
+                        <label>Nouvelle photo (optionnel)</label>
+                        <input type="file" name="main_photo" class="form-control" accept="image/jpeg,image/png,image/gif,image/webp">
+                        <small class="text-muted">Laissez vide pour garder la photo actuelle. Formats: JPG, PNG, GIF, WEBP (max 2MB)</small>
+                    </div>
+                    
                     <button type="submit" class="btn btn-warning">Mettre à jour</button>
                     <a href="{{ route('seller.products.index') }}" class="btn btn-secondary">Annuler</a>
                 </form>

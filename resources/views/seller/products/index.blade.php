@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes produits - Vendeur</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -12,6 +13,7 @@
             <a class="navbar-brand" href="#">Marketplace Sénégal - Vendeur</a>
             <div class="navbar-nav ms-auto">
                 <a href="{{ route('seller.products.create') }}" class="btn btn-success btn-sm me-2">+ Ajouter produit</a>
+                <a href="{{ route('seller.subscriptions.index') }}" class="btn btn-outline-light btn-sm me-2">Abonnement</a>
                 <span class="navbar-text text-white me-3">{{ Auth::user()->name }}</span>
                 <form method="POST" action="{{ route('logout') }}" style="display:inline">
                     @csrf
@@ -51,7 +53,11 @@
                                 @foreach($products as $product)
                                 <tr>
                                     <td>
-                                        <img src="https://via.placeholder.com/50" alt="Photo" class="img-thumbnail" style="width: 50px;">
+                                        @if($product->main_photo)
+                                            <img src="{{ asset('storage/' . $product->main_photo) }}" alt="Photo" style="width: 50px; height: 50px; object-fit: cover;" class="img-thumbnail">
+                                        @else
+                                            <img src="https://via.placeholder.com/50" alt="No photo" style="width: 50px;" class="img-thumbnail">
+                                        @endif
                                     </td>
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->category->name }}</td>

@@ -20,6 +20,8 @@
                             <li class="nav-item"><a class="nav-link" href="{{ route('seller.products.index') }}">Dashboard</a></li>
                         @elseif(auth()->user()->role == 'admin')
                             <li class="nav-item"><a class="nav-link" href="{{ route('admin.categories.index') }}">Admin</a></li>
+                        @elseif(auth()->user()->role == 'buyer')
+                            <li class="nav-item"><a class="nav-link" href="{{ route('buyer.dashboard') }}">Dashboard</a></li>
                         @endif
                         <li class="nav-item">
                             <form method="POST" action="{{ route('logout') }}">
@@ -82,7 +84,11 @@
                     @forelse($products as $product)
                     <div class="col-md-4 mb-4">
                         <div class="card h-100">
-                            <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="{{ $product->name }}">
+                            @if($product->main_photo)
+                                <img src="{{ asset('storage/' . $product->main_photo) }}" class="card-img-top" alt="{{ $product->name }}" style="height: 200px; object-fit: cover;">
+                            @else
+                                <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="{{ $product->name }}" style="height: 200px; object-fit: cover;">
+                            @endif
                             <div class="card-body">
                                 <h5 class="card-title">{{ $product->name }}</h5>
                                 <p class="card-text text-muted">{{ Str::limit($product->description, 80) }}</p>

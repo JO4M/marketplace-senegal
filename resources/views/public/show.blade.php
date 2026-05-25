@@ -20,6 +20,8 @@
                             <li class="nav-item"><a class="nav-link" href="{{ route('seller.products.index') }}">Dashboard</a></li>
                         @elseif(auth()->user()->role == 'admin')
                             <li class="nav-item"><a class="nav-link" href="{{ route('admin.categories.index') }}">Admin</a></li>
+                        @elseif(auth()->user()->role == 'buyer')
+                            <li class="nav-item"><a class="nav-link" href="{{ route('buyer.dashboard') }}">Dashboard</a></li>
                         @endif
                         <li class="nav-item">
                             <form method="POST" action="{{ route('logout') }}">
@@ -39,7 +41,11 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-6">
-                <img src="https://via.placeholder.com/500x400" class="img-fluid rounded" alt="{{ $product->name }}">
+                @if($product->main_photo)
+                    <img src="{{ asset('storage/' . $product->main_photo) }}" class="img-fluid rounded" alt="{{ $product->name }}">
+                @else
+                    <img src="https://via.placeholder.com/500x400" class="img-fluid rounded" alt="{{ $product->name }}">
+                @endif
             </div>
             <div class="col-md-6">
                 <h1>{{ $product->name }}</h1>
@@ -81,6 +87,7 @@
                         </a>
                     </div>
                 @endauth
+
                 <!-- Bouton Réclamation -->
                 @auth
                     @if(auth()->user()->role == 'buyer')
@@ -100,7 +107,11 @@
             @foreach($similar as $similarProduct)
             <div class="col-md-3 mb-4">
                 <div class="card h-100">
-                    <img src="https://via.placeholder.com/150x150" class="card-img-top" alt="{{ $similarProduct->name }}">
+                    @if($similarProduct->main_photo)
+                        <img src="{{ asset('storage/' . $similarProduct->main_photo) }}" class="card-img-top" alt="{{ $similarProduct->name }}" style="height: 150px; object-fit: cover;">
+                    @else
+                        <img src="https://via.placeholder.com/150x150" class="card-img-top" alt="{{ $similarProduct->name }}">
+                    @endif
                     <div class="card-body">
                         <h6>{{ $similarProduct->name }}</h6>
                         <p><strong>{{ number_format($similarProduct->price, 0, ',', ' ') }} FCFA</strong></p>

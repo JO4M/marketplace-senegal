@@ -25,7 +25,7 @@ class AuthenticatedSessionController extends Controller
         return $this->authenticated($request, Auth::user());
     }
 
-    protected function authenticated(Request $request, $user): RedirectResponse
+  /*  protected function authenticated(Request $request, $user): RedirectResponse
     {
         if ($user->role === 'admin') {
             return redirect()->route('admin.dashboard');
@@ -38,6 +38,20 @@ class AuthenticatedSessionController extends Controller
          // Pour l'acheteur, rediriger vers son dashboard
         return redirect()->route('buyer.dashboard');
     }
+        */
+    protected function authenticated(Request $request, $user): RedirectResponse
+{
+    if ($user->role === 'admin') {
+        return redirect()->route('admin.dashboard');
+    }
+    
+    if ($user->role === 'seller') {
+        return redirect()->route('seller.dashboard');
+    }
+    
+    // Par défaut pour buyer
+    return redirect()->route('buyer.dashboard');
+}
 
     public function destroy(Request $request): RedirectResponse
     {

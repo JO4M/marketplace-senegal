@@ -28,7 +28,7 @@ class RegisteredUserController extends Controller
      *
      * @throws ValidationException
      */
-    public function store(Request $request): RedirectResponse
+/*    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -47,5 +47,39 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return redirect(route('dashboard', absolute: false));
+    }*/
+        public function store(Request $request)
+{
+    $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+        'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        'role' => ['required', 'in:buyer,seller'],
+        'boutique_name' => ['required_if:role,seller', 'nullable', 'string', 'max:255'],
+        'phone' => ['required_if:role,seller', 'nullable', 'string', 'max:20'],
+        'whatsapp' => ['nullable', 'string', 'max:20'],
+        'city' => ['nullable', 'string', 'max:255'],
+    ]);
+
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'role' => $request->role,
+        'boutique_name' => $request->boutique_name,
+        'phone' => $request->phone,
+        'whatsapp' => $request->whatsapp,
+        'city' => $request->city,
+        'is_active' => $request->role === 'seller' ? false : true,
+    ]);
+
+    Auth::login($user);
+
+    // Redirection selon le rôle
+    if ($user->role === 'seller') {
+        return redirect()->route('seller.dashboard');
     }
+    
+    return redirect()->route('buyer.dashboard');
+}
 }

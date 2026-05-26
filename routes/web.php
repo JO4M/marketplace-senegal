@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ClaimController as AdminClaimController;
 Route::get('/', [PublicController::class, 'index'])->name('home');
 Route::get('/produits', [PublicController::class, 'products'])->name('public.products');
 Route::get('/produit/{slug}', [PublicController::class, 'show'])->name('public.product.show');
+Route::get('/boutique/{id}', [PublicController::class, 'sellerProfile'])->name('public.seller.profile');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

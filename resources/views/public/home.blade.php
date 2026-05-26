@@ -15,12 +15,17 @@
         .category-card {
             transition: transform 0.3s;
             cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
         .category-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
         .product-card {
             transition: box-shadow 0.3s;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
         .product-card:hover {
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
@@ -37,6 +42,26 @@
         }
         .rating {
             color: #ffc107;
+        }
+        .section-header {
+            position: relative;
+            margin-bottom: 40px;
+        }
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .view-all {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+        @media (max-width: 768px) {
+            .view-all {
+                position: static;
+                text-align: center;
+                margin-top: 10px;
+            }
         }
     </style>
 </head>
@@ -65,8 +90,15 @@
 
     <!-- Produits à la une -->
     <div class="container my-5">
-        <h2 class="text-center mb-4">Produits à la une</h2>
-        <p class="text-center text-muted mb-5">Notre sélection coup de cœur de la semaine.</p>
+        <div class="section-header">
+            <h2 class="text-center mb-4">Produits à la une</h2>
+            <p class="text-center text-muted mb-4">Notre sélection coup de cœur de la semaine.</p>
+            <div class="text-center">
+                <a href="{{ route('public.products') }}" class="btn btn-outline-primary">
+                    Voir tout le catalogue <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
         <div class="row">
             @forelse($products as $product)
             <div class="col-md-3 mb-4">
@@ -77,9 +109,8 @@
                         <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="{{ $product->name }}" style="height: 200px; object-fit: cover;">
                     @endif
                     <div class="card-body">
-                        <small class="text-muted">{{ $product->category->name }}</small>
-                        <h5 class="card-title mt-2">{{ $product->name }}</h5>
                         <p class="card-text text-muted small">Par {{ $product->user->boutique_name ?? $product->user->name }}</p>
+                        <h5 class="card-title">{{ $product->name }}</h5>
                         <p class="card-text fw-bold text-primary">{{ number_format($product->price, 0, ',', ' ') }} FCFA</p>
                         <a href="{{ route('public.product.show', $product->slug) }}" class="btn btn-outline-primary btn-sm">Voir les détails</a>
                     </div>
@@ -103,7 +134,7 @@
                         <div class="card-body">
                             <i class="fas fa-{{ $category->icon ?? 'tag' }} fa-3x mb-3 text-primary"></i>
                             <h6 class="fw-bold">{{ $category->name }}</h6>
-                            <small class="text-muted">{{ rand(10, 500) }} articles</small>
+                            <small class="text-muted">{{ $category->products()->where('status', 'active')->count() }} articles</small>
                         </div>
                     </div>
                 </a>
@@ -176,8 +207,15 @@
                 </div>
             </div>
             <hr>
-            <div class="text-center">
-                <p class="mb-0">© 2026 Vitrine Numérique. Tous droits réservés. Made with ❤️</p>
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">© 2026 Vitrine Numérique. Tous droits réservés.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white me-3"><i class="fab fa-linkedin fa-lg"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-twitter fa-lg"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-facebook fa-lg"></i></a>
+                </div>
             </div>
         </div>
     </footer>

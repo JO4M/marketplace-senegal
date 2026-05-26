@@ -34,16 +34,34 @@ class PublicController extends Controller
     public function products(Request $request)
     {
         $query = Product::where('status', 'active')
-            ->where('is_active', true);
+            ->where('is_active', true)
+            ->with(['user', 'category']);
+        
+        // Filtre par recherche
+        if ($request->has('search') && $request->search) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
         
         // Filtre par catégorie
         if ($request->has('category') && $request->category) {
             $query->where('category_id', $request->category);
         }
         
-        // Recherche par nom
-        if ($request->has('search') && $request->search) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+        // Filtre par prix min
+        if ($request->has('min_price') && $request->min_price) {
+            $query->where('price', '>=', $request->min_price);
+        }
+        
+        // Filtre par prix max
+        if ($request->has('max_price') && $request->max_price) {
+            $query->where('price', '<=', $request->max_price);
+        }
+        
+        // Filtre par ville
+        if ($request->has('city') && $request->city) {
+            $query->whereHas('user', function ($q) use ($request) {
+                $q->where('city', $request->city);
+            });
         }
         
         $products = $query->paginate(12);
@@ -56,6 +74,7 @@ class PublicController extends Controller
     {
         $product = Product::where('slug', $slug)
             ->where('status', 'active')
+            ->with(['user', 'category'])
             ->firstOrFail();
         
         // Incrémenter les vues
@@ -65,9 +84,32 @@ class PublicController extends Controller
         $similar = Product::where('category_id', $product->category_id)
             ->where('id', '!=', $product->id)
             ->where('status', 'active')
+            ->with(['user', 'category'])
             ->limit(4)
             ->get();
         
         return view('public.show', compact('product', 'similar'));
+    }
+    
+    /**
+     * Affiche le profil public d'un vendeur
+     */
+    public function sellerProfile($id)
+    {
+        $seller = User::where('id', $id)
+            ->where('role', 'seller')
+            ->where('is_active', true)
+            ->firstOrFail();
+        
+        $products = Product::where('user_id', $seller->id)
+            ->where('status', 'active')
+            ->where('is_active', true)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+        
+        // Calcul approximatif des ventes (basé sur les vues)
+        $totalSales = $seller->products->sum('views_count') ?? 0;
+        
+        return view('public.seller-profile', compact('seller', 'products', 'totalSales'));
     }
 }

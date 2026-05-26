@@ -8,30 +8,31 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">Marketplace Sénégal</a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('buyer.dashboard') }}">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('buyer.claims.index') }}">Mes réclamations</a></li>
-                    <li class="nav-item">
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="btn btn-link nav-link">Déconnexion</button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+
+    @include('partials.navbar')
 
     <div class="container mt-4">
         <div class="row">
-            <div class="col-md-12">
+            <!-- Menu latéral gauche -->
+            <div class="col-md-3">
+                <div class="list-group mb-4">
+                    <a href="{{ route('buyer.dashboard') }}" class="list-group-item list-group-item-action active">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                    <a href="{{ route('buyer.claims.index') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-file-alt"></i> Mes réclamations
+                    </a>
+                    <a href="{{ route('home') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-shopping-bag"></i> Continuer mes achats
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contenu principal -->
+            <div class="col-md-9">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
-                        <h3>Dashboard Acheteur</h3>
+                        <h3><i class="fas fa-tachometer-alt"></i> Dashboard Acheteur</h3>
                     </div>
                     <div class="card-body">
                         <h4>Bonjour, {{ Auth::user()->name }} !</h4>
@@ -80,8 +81,17 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Bouton retour à l'accueil -->
+                <div class="mt-4">
+                    <a href="{{ route('home') }}" class="btn btn-primary">
+                        <i class="fas fa-home"></i> Retour à l'accueil
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

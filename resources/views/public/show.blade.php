@@ -8,35 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">
-                <i class="fas fa-store"></i> Marketplace Sénégal
-            </a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto">
-                    @auth
-                        @if(auth()->user()->role == 'seller')
-                            <li class="nav-item"><a class="nav-link" href="{{ route('seller.products.index') }}">Dashboard</a></li>
-                        @elseif(auth()->user()->role == 'admin')
-                            <li class="nav-item"><a class="nav-link" href="{{ route('admin.categories.index') }}">Admin</a></li>
-                        @elseif(auth()->user()->role == 'buyer')
-                            <li class="nav-item"><a class="nav-link" href="{{ route('buyer.dashboard') }}">Dashboard</a></li>
-                        @endif
-                        <li class="nav-item">
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="btn btn-link nav-link">Déconnexion</button>
-                            </form>
-                        </li>
-                    @else
-                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Connexion</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">S'inscrire</a></li>
-                    @endauth
-                </ul>
-            </div>
-        </div>
-    </nav>
+
+    @include('partials.navbar')
 
     <div class="container mt-4">
         <div class="row">

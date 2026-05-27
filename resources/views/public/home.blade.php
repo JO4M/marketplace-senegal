@@ -209,7 +209,7 @@
             <hr>
             <div class="row">
                 <div class="col-md-6 text-center text-md-start">
-                    <p class="mb-0">© 2026 Vitrine Numérique. Tous droits réservés.</p>
+                    <p class="mb-0">© 2026 JAAYAL NU. Tous droits réservés.</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <a href="#" class="text-white me-3"><i class="fab fa-linkedin fa-lg"></i></a>

@@ -224,7 +224,7 @@
             </div>
             <hr>
             <div class="text-center">
-                <p class="mb-0">© 2026 Vitrine Numérique. Tous droits réservés.</p>
+                <p class="mb-0">© 2026 JAAYAL NU. Tous droits réservés.</p>
             </div>
         </div>
     </footer>

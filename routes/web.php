@@ -33,6 +33,7 @@ Route::middleware(['auth', 'role:seller'])->prefix('seller')->name('seller.')->g
     Route::post('products/{product}/toggle-status', [SellerProductController::class, 'toggleStatus'])->name('products.toggle-status');
     Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('subscriptions.index');
     Route::post('/subscriptions/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscriptions.subscribe');
+    Route::delete('products/{product}/delete-photo', [SellerProductController::class, 'deletePhoto'])->name('products.delete-photo');
 });
 
 // Routes admin (protégées par middleware)

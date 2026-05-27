@@ -8,11 +8,21 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
-                <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Accueil</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('public.products') }}">Tous les produits</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('public.products') }}">Catégories</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('public.products') }}">Vendeurs</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">À propos</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('home') }}">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('public.products') }}">Tous les produits</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('public.categories') }}">Catégories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('public.sellers') }}">Vendeurs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('public.about') }}">À propos</a>
+                </li>
             </ul>
             <ul class="navbar-nav">
                 @auth

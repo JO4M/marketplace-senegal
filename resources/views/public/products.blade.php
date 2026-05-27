@@ -59,7 +59,7 @@
 
     <!-- Header page -->
     <div class="container mb-4">
-        <h1 class="display-5 fw-bold">Nos Produits Artisanaux</h1>
+        <h1 class="display-5 fw-bold">Nos Produits</h1>
         <p class="text-muted">Découvrez le savoir-faire unique de nos artisans locaux. Du textile à la décoration, chaque pièce raconte une histoire authentique du Sénégal.</p>
     </div>
 
@@ -180,7 +180,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mb-4">
-                    <h5>Vitrine Numérique</h5>
+                    <h5>JAAYAL NU</h5>
                     <p>Soutenir l'artisanat et le commerce local au Sénégal grâce au numérique.</p>
                 </div>
                 <div class="col-md-4 mb-4">

@@ -16,6 +16,10 @@ Route::get('/', [PublicController::class, 'index'])->name('home');
 Route::get('/produits', [PublicController::class, 'products'])->name('public.products');
 Route::get('/produit/{slug}', [PublicController::class, 'show'])->name('public.product.show');
 Route::get('/boutique/{id}', [PublicController::class, 'sellerProfile'])->name('public.seller.profile');
+// Pages publiques supplémentaires
+Route::get('/categories', [PublicController::class, 'categories'])->name('public.categories');
+Route::get('/vendeurs', [PublicController::class, 'sellers'])->name('public.sellers');
+Route::get('/a-propos', [PublicController::class, 'about'])->name('public.about');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

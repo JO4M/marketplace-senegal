@@ -112,4 +112,34 @@ class PublicController extends Controller
         
         return view('public.seller-profile', compact('seller', 'products', 'totalSales'));
     }
+
+    /**
+ * Page des catégories
+ */
+public function categories()
+{
+    $categories = Category::where('is_active', true)->get();
+    return view('public.categories', compact('categories'));
+}
+
+/**
+ * Page des vendeurs
+ */
+public function sellers()
+{
+    $sellers = User::where('role', 'seller')
+        ->where('is_active', true)
+        ->orderBy('created_at', 'desc')
+        ->paginate(12);
+    
+    return view('public.sellers', compact('sellers'));
+}
+
+/**
+ * Page À propos
+ */
+public function about()
+{
+    return view('public.about');
+}
 }
